@@ -5,6 +5,7 @@ import random
 DEBUG = True
 TESTWORD = "CAT"
 TESTGUESS = "C_T"
+TESTGUESSLETTER = "A"
 
 
 def load_word():
@@ -36,8 +37,9 @@ def is_word_guessed(secret_word, letters_guessed):
         bool: True only if all the letters of secret_word are in
         letters_guessed, False otherwise
     """
-    # TODO: Loop through the letters in the secret_word and check if a letter
-    # is not in letters_guessed
+    # loops through both words to see if each letter is the same.
+    # if all indexes are the same the output is true.
+    # if any index is different it stops the loop by returning false.
     if DEBUG:
         print("[is_word_guessed](" + secret_word + "," + letters_guessed + ")")
     is_guessed = False
@@ -48,7 +50,6 @@ def is_word_guessed(secret_word, letters_guessed):
             return is_guessed
     is_guessed = True
     return is_guessed
-    # pass
 
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -68,7 +69,9 @@ def get_guessed_word(secret_word, letters_guessed):
     """
 
     # TODO: Loop through the letters in secret word and build a string that
-    # shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
+    # shows the letters that have been guessed correctly so far that are saved
+    # in letters_guessed and underscores for the letters that have not been
+    # guessed yet
 
     pass
 
@@ -82,9 +85,16 @@ def is_guess_in_word(guess, secret_word):
     Returns:
         bool: True if the guess is in the secret_word, False otherwise
     """
-    # TODO: check if the letter guess is in the secret word
-
-    pass
+    # Checks to see if guess is at any index in the secret_word
+    # otherwise returns False
+    if DEBUG:
+        print("[is_guess_in_word](" + guess + "," + secret_word + ")")
+    for i in range(len(secret_word)):
+        if guess == secret_word[i]:
+            return True
+        else:
+            pass
+    return False
 
 
 def spaceman(secret_word):
@@ -114,9 +124,15 @@ def spaceman(secret_word):
 if DEBUG:
     print("Testing with word " + TESTWORD + " and guess " + TESTGUESS)
     print("\n")
-    print("Testing is_word_guessed")
+
+    print("Testing is_word_guessed:")
     print(is_word_guessed(TESTWORD, TESTGUESS))
     print("\n")
+
+    print("Testing is_guess_in_word:")
+    print(is_guess_in_word(TESTGUESSLETTER, TESTWORD))
+    print("\n")
+
 
 # These function calls that will start the game
 secret_word = load_word()
