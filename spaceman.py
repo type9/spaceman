@@ -4,8 +4,9 @@ import random
 # DEBUGGING GLOBALS
 DEBUG = True
 TESTWORD = "CAT"
-TESTGUESS = "C_T"
-TESTGUESSLETTER = "A"
+TESTGUESSES = "C_T"
+TESTGUESS = "A"
+TESTLETTERSGUESSED = "AT"
 
 
 def load_word():
@@ -67,13 +68,24 @@ def get_guessed_word(secret_word, letters_guessed):
         correct position.  For letters in the word that the user has not yet
         guessed, shown an _ (underscore) instead.
     """
-
-    # TODO: Loop through the letters in secret word and build a string that
-    # shows the letters that have been guessed correctly so far that are saved
-    # in letters_guessed and underscores for the letters that have not been
-    # guessed yet
-
-    pass
+    if DEBUG:
+        print("[get_guessed_word](" + secret_word +
+              "," + letters_guessed + ")")
+    # converts secret_word into a list
+    final_output = list(secret_word)
+    # turns final_output into a list full of blanks (underscores)
+    for x in range(len(final_output)):
+        final_output[x] = "_"
+    # for every letter that has been guessed
+    for x in range(len(letters_guessed)):
+        # checks to see if it exists at an index y on secret_word
+        for y in range(len(secret_word)):
+            # if it exists at index y, then replaces at same index, with letter
+            # that was tested, at final_output
+            if letters_guessed[x] == secret_word[y]:
+                final_output[y] = letters_guessed[x]
+    # converts the list back to string
+    return "".join(final_output)
 
 
 def is_guess_in_word(guess, secret_word):
@@ -122,18 +134,28 @@ def spaceman(secret_word):
 
 # Test functions
 if DEBUG:
-    print("Testing with word " + TESTWORD + " and guess " + TESTGUESS)
+    print("Testing with test variables:\n"
+          "Secret word: " + TESTWORD + "\n"
+          "Guessed word: " + TESTGUESSES + "\n"
+          "Guessed letter: " + TESTGUESS + "\n"
+          "Guessed letters(string)" + TESTLETTERSGUESSED
+          )
     print("\n")
 
     print("Testing is_word_guessed:")
-    print(is_word_guessed(TESTWORD, TESTGUESS))
+    print(is_word_guessed(TESTWORD, TESTGUESSES))
     print("\n")
 
     print("Testing is_guess_in_word:")
-    print(is_guess_in_word(TESTGUESSLETTER, TESTWORD))
+    print(is_guess_in_word(TESTGUESS, TESTWORD))
+    print("\n")
+
+    print("Testing get_guessed_word")
+    print(get_guessed_word(TESTWORD, TESTLETTERSGUESSED))
     print("\n")
 
 
 # These function calls that will start the game
-secret_word = load_word()
-spaceman(load_word())
+if -DEBUG:
+    secret_word = load_word()
+    spaceman(load_word())
