@@ -1,4 +1,10 @@
 import random
+# GLOBALS
+
+# DEBUGGING GLOBALS
+DEBUG = True
+TESTWORD = "CAT"
+TESTGUESS = "C_T"
 
 
 def load_word():
@@ -31,8 +37,18 @@ def is_word_guessed(secret_word, letters_guessed):
         letters_guessed, False otherwise
     """
     # TODO: Loop through the letters in the secret_word and check if a letter
-    # is not in lettersGuessed
-    pass
+    # is not in letters_guessed
+    if DEBUG:
+        print("[is_word_guessed](" + secret_word + "," + letters_guessed + ")")
+    is_guessed = False
+    for i in range(len(letters_guessed)):
+        if secret_word[i] == letters_guessed[i]:
+            pass
+        else:
+            return is_guessed
+    is_guessed = True
+    return is_guessed
+    # pass
 
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -91,7 +107,16 @@ def spaceman(secret_word):
     # TODO: show the guessed word so far
 
     # TODO: check if the game has been won or lost
+    pass
 
+
+# Test functions
+if DEBUG:
+    print("Testing with word " + TESTWORD + " and guess " + TESTGUESS)
+    print("\n")
+    print("Testing is_word_guessed")
+    print(is_word_guessed(TESTWORD, TESTGUESS))
+    print("\n")
 
 # These function calls that will start the game
 secret_word = load_word()
