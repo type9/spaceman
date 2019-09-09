@@ -39,21 +39,20 @@ def is_word_guessed(secret_word, letters_guessed):
         bool: True only if all the letters of secret_word are in
         letters_guessed, False otherwise
     """
-    # loops through both words to see if each letter is the same.
-    # if all indexes are the same the output is true.
-    # if any index is different it stops the loop by returning false.
+
     if DEBUG:
         print("[is_word_guessed](" + secret_word + ")")
-    is_guessed = False
-    if len(letters_guessed) == 0: # checks for edge case of no letters guessed
-        return is_guessed
-    for i in range(len(letters_guessed)):
-        if secret_word[i] == letters_guessed[i]:
+    secret_word_list = list(secret_word) # converts secret word into a list
+    for x in range(len(letters_guessed)): # checks to see if letters guessed exist in secret word. replaces indexes which the letters exist with a "_"
+        for y in range(len(secret_word_list)):
+            if letters_guessed[x] == secret_word[y]:
+                secret_word_list[y] = "_"
+    for x in range(len(secret_word_list)): # checks if all letters in secret_word_list have been guess. If so it returns true, if any haven't been guessed it returns false.
+        if secret_word_list[x] == "_":
             pass
         else:
-            return is_guessed
-    is_guessed = True
-    return is_guessed
+            return False
+    return True
 
 
 def get_guessed_word(secret_word, letters_guessed):
