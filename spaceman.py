@@ -1,8 +1,9 @@
 import random
 # GLOBALS
-
+guessed_word_joinchar = ""  # "" for nothing between the characters e.g. "_AT"
 # DEBUGGING GLOBALS
 DEBUG = True
+TESTMODE = False
 TESTWORD = "CAT"
 TESTGUESSES = "C_T"
 TESTGUESS = "A"
@@ -42,8 +43,10 @@ def is_word_guessed(secret_word, letters_guessed):
     # if all indexes are the same the output is true.
     # if any index is different it stops the loop by returning false.
     if DEBUG:
-        print("[is_word_guessed](" + secret_word + "," + letters_guessed + ")")
+        print("[is_word_guessed](" + secret_word + ")")
     is_guessed = False
+    if len(letters_guessed) == 0: # checks for edge case of no letters guessed
+        return is_guessed
     for i in range(len(letters_guessed)):
         if secret_word[i] == letters_guessed[i]:
             pass
@@ -70,7 +73,7 @@ def get_guessed_word(secret_word, letters_guessed):
     """
     if DEBUG:
         print("[get_guessed_word](" + secret_word +
-              "," + letters_guessed + ")")
+              ")")
     # converts secret_word into a list
     final_output = list(secret_word)
     # turns final_output into a list full of blanks (underscores)
@@ -85,7 +88,7 @@ def get_guessed_word(secret_word, letters_guessed):
             if letters_guessed[x] == secret_word[y]:
                 final_output[y] = letters_guessed[x]
     # converts the list back to string
-    return "".join(final_output)
+    return guessed_word_joinchar.join(final_output)
 
 
 def is_guess_in_word(guess, secret_word):
@@ -129,16 +132,48 @@ def spaceman(secret_word):
     # TODO: show the guessed word so far
 
     # TODO: check if the game has been won or lost
-    pass
+    try_again = True
+    while try_again: # loop for playing again
+        letters_guessed = list() #list of letters guessed
+        guesses_left = 6 # guesses left, 0 means game over
+        while (is_word_guessed(secret_word, letters_guessed) == False) and (guesses_left > 0): # game round loop. breaks if guesses run out or word is guessed.
+            print("Word has not been guessed. Word state is:")
+            preguess_state = get_guessed_word(secret_word, letters_guessed)
+            print(preguess_state + "\n")
 
+            user_input = input("Enter lowercase letter to guess: ")
+
+            if is_guess_in_word(user_input, secret_word):
+                letters_guessed.append(user_input)
+            
+            postguess_state = get_guessed_word(secret_word, letters_guessed)
+            print(postguess_state + "\n")
+            
+            if preguess_state == postguess_state: # checks to see if the word has changed after the user has guessed the word (i.e. incorrect guess)
+                print("Guessed incorrect letter.")
+                -guesses_left # removes one guess
+                print("You have " + str(guesses_left) + " guesses left")
+            else:
+                print("Guessed correctly.")
+                print("You have " + str(guesses_left) + " guesses left")
+
+        if guesses_left == 0:
+            user_input = input("You have lost. Would you like to try again (y/n)?: ")
+        else:
+            user_input = input("You have won. Would you like to try again (y/n)?: ")
+
+        if user_input == "y":
+            try_again = True
+        else:
+            try_again = False
 
 # Test functions
-if DEBUG:
+if TESTMODE:
     print("Testing with test variables:\n"
           "Secret word: " + TESTWORD + "\n"
           "Guessed word: " + TESTGUESSES + "\n"
           "Guessed letter: " + TESTGUESS + "\n"
-          "Guessed letters(string)" + TESTLETTERSGUESSED
+          "Guessed letters(string): " + TESTLETTERSGUESSED
           )
     print("\n")
 
@@ -156,6 +191,7 @@ if DEBUG:
 
 
 # These function calls that will start the game
-if -DEBUG:
+if not TESTMODE:
+    print("Starting game")
     secret_word = load_word()
-    spaceman(load_word())
+    spaceman(secret_word)
