@@ -2,7 +2,7 @@ import random
 # GLOBALS
 guessed_word_joinchar = ""  # "" for nothing between the characters e.g. "_AT"
 # DEBUGGING GLOBALS
-DEBUG = True
+DEBUG = False
 TESTMODE = False
 TESTWORD = "CAT"
 TESTGUESSES = "C_T"
@@ -150,7 +150,7 @@ def spaceman(secret_word):
             
             if preguess_state == postguess_state: # checks to see if the word has changed after the user has guessed the word (i.e. incorrect guess)
                 print("Guessed incorrect letter.")
-                -guesses_left # removes one guess
+                guesses_left -= 1 # removes one guess
                 print("You have " + str(guesses_left) + " guesses left")
             else:
                 print("Guessed correctly.")
@@ -163,6 +163,7 @@ def spaceman(secret_word):
 
         if user_input == "y":
             try_again = True
+            secret_word = load_word()
         else:
             try_again = False
 
