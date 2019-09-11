@@ -2,8 +2,8 @@ import random
 # GLOBALS
 guessed_word_joinchar = ""  # "" for nothing between the characters e.g. "_AT"
 # DEBUGGING GLOBALS
-DEBUG = False
-TESTMODE = False
+DEBUG = False # enables tracer logs when methods are called
+TESTMODE = False # disables the running of the game and enables testing of helper functions
 TESTWORD = "CAT"
 TESTGUESSES = "C_T"
 TESTGUESS = "A"
@@ -80,7 +80,7 @@ def get_guessed_word(secret_word, letters_guessed):
         final_output[x] = "_"
     # for every letter that has been guessed
     for x in range(len(letters_guessed)):
-        # checks to see if it exists at an index y on secret_word
+        # checks to see if it exists at a index y on secret_word
         for y in range(len(secret_word)):
             # if it exists at index y, then replaces at same index, with letter
             # that was tested, at final_output
@@ -137,15 +137,15 @@ def spaceman(secret_word):
         guesses_left = 7 # guesses left, 0 means game over
         while (is_word_guessed(secret_word, letters_guessed) == False) and (guesses_left > 0): # game round loop. breaks if guesses run out or word is guessed.
             print("Word has not been guessed. Word state is:")
-            preguess_state = get_guessed_word(secret_word, letters_guessed)
+            preguess_state = get_guessed_word(secret_word, letters_guessed) # records guessed_word before the letter has been guessed
             print(preguess_state + "\n")
 
             user_input = input("Enter lowercase letter to guess: ")
 
-            if is_guess_in_word(user_input, secret_word):
+            if is_guess_in_word(user_input, secret_word): # adds user's guess to letters_guessed
                 letters_guessed.append(user_input)
             
-            postguess_state = get_guessed_word(secret_word, letters_guessed)
+            postguess_state = get_guessed_word(secret_word, letters_guessed) # records guessed_word after letter has been guessed
             print(postguess_state + "\n")
             
             if preguess_state == postguess_state: # checks to see if the word has changed after the user has guessed the word (i.e. incorrect guess)
@@ -156,12 +156,12 @@ def spaceman(secret_word):
                 print("Guessed correctly.")
                 print("You have " + str(guesses_left) + " guesses left")
 
-        if guesses_left == 0:
+        if guesses_left == 0: # checks guesses_left to decide if user has won or lost at the end of the game
             user_input = input("You have lost. Would you like to try again (y/n)?: ")
         else:
             user_input = input("You have won. Would you like to try again (y/n)?: ")
 
-        if user_input == "y":
+        if user_input == "y": # sets try_again and loads new word if user types 'y'
             try_again = True
             secret_word = load_word()
         else:
