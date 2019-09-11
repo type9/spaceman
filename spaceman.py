@@ -134,7 +134,7 @@ def spaceman(secret_word):
     try_again = True
     while try_again: # loop for playing again
         letters_guessed = list() #list of letters guessed
-        guesses_left = 6 # guesses left, 0 means game over
+        guesses_left = 7 # guesses left, 0 means game over
         while (is_word_guessed(secret_word, letters_guessed) == False) and (guesses_left > 0): # game round loop. breaks if guesses run out or word is guessed.
             print("Word has not been guessed. Word state is:")
             preguess_state = get_guessed_word(secret_word, letters_guessed)
