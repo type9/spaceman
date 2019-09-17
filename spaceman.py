@@ -118,19 +118,6 @@ def spaceman(secret_word):
     Args:
         secret_word (string): the secret word to guess.
     """
-
-    # TODO: show the player information about the game according to the project
-    # spec
-
-    # TODO: Ask the player to guess one letter per round and check that it is
-    # only one letter
-
-    # TODO: Check if the guessed letter is in the secret or not and give the
-    # player feedback
-
-    # TODO: show the guessed word so far
-
-    # TODO: check if the game has been won or lost
     try_again = True
     while try_again: # loop for playing again
         letters_guessed = list() #list of letters guessed
@@ -178,14 +165,17 @@ if TESTMODE:
     print("\n")
 
     print("Testing is_word_guessed:")
+    assert (is_word_guessed(TESTWORD, TESTGUESSES) == False), "Error in result from is_word_guessed()"
     print(is_word_guessed(TESTWORD, TESTGUESSES))
     print("\n")
 
     print("Testing is_guess_in_word:")
+    assert (is_guess_in_word(TESTGUESS, TESTWORD) == True), "Error in result from is_guess_in_word()"
     print(is_guess_in_word(TESTGUESS, TESTWORD))
     print("\n")
 
     print("Testing get_guessed_word")
+    assert (get_guessed_word(TESTWORD, TESTLETTERSGUESSED) == "_AT"), "Error in result from get_guessed_word()"
     print(get_guessed_word(TESTWORD, TESTLETTERSGUESSED))
     print("\n")
 
