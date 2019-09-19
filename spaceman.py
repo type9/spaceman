@@ -1,4 +1,5 @@
 import random
+import unittest
 # GLOBALS
 guessed_word_joinchar = ""  # "" for nothing between the characters e.g. "_AT"
 # DEBUGGING GLOBALS
@@ -155,6 +156,12 @@ def spaceman(secret_word):
             try_again = False
 
 # Test functions
+def test_is_word_guessed():
+    assert (is_word_guessed(TESTWORD, TESTGUESSES) == False), "Error in result from is_word_guessed()"
+def test_is_guess_in_word():
+    assert (is_guess_in_word(TESTGUESS, TESTWORD) == True), "Error in result from is_guess_in_word()"
+def test_get_guessed_word():
+    assert (get_guessed_word(TESTWORD, TESTLETTERSGUESSED) == "_AT"), "Error in result from get_guessed_word()"
 if TESTMODE:
     print("Testing with test variables:\n"
           "Secret word: " + TESTWORD + "\n"
@@ -165,20 +172,19 @@ if TESTMODE:
     print("\n")
 
     print("Testing is_word_guessed:")
-    assert (is_word_guessed(TESTWORD, TESTGUESSES) == False), "Error in result from is_word_guessed()"
+    test_is_word_guessed()
     print(is_word_guessed(TESTWORD, TESTGUESSES))
     print("\n")
 
     print("Testing is_guess_in_word:")
-    assert (is_guess_in_word(TESTGUESS, TESTWORD) == True), "Error in result from is_guess_in_word()"
+    test_is_guess_in_word()
     print(is_guess_in_word(TESTGUESS, TESTWORD))
     print("\n")
 
     print("Testing get_guessed_word")
-    assert (get_guessed_word(TESTWORD, TESTLETTERSGUESSED) == "_AT"), "Error in result from get_guessed_word()"
+    test_get_guessed_word()
     print(get_guessed_word(TESTWORD, TESTLETTERSGUESSED))
     print("\n")
-
 
 # These function calls that will start the game
 if not TESTMODE:
